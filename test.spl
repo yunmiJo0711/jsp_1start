@@ -1,0 +1,4 @@
+select * from TBL_CUSTOMER 
+where custom_id='twice';
+
+select * from TBL_CUSTOMER where custom_id='twice';

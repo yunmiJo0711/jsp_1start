@@ -1,0 +1,25 @@
+@charset "UTF-8";
+table{
+	border-collapse: collapse;
+}
+
+th, td{
+	border: 1px solid gray;
+	width: 300px;
+	text-align: center;
+	padding: 10px 15px;
+}
+/* 상품명 왼쪽 정렬 */
+tr#product > td:nth-child(2){
+	text-align: left;
+}
+
+tr#productH > th:nth-child(5){
+	width: 200px;
+}
+
+/* 가격 오른쪽 정렬 */
+tr#product > td:nth-child(5){
+	width: 200px;
+	text-align: right;
+}
