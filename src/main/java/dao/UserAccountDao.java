@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import vo.UserAccountVO;
@@ -35,6 +36,9 @@ public class UserAccountDao {
 
 	
 	// 회원가입은 - db 테이블에 insert
+    // 		   - db 테이블에 not null 컬럼 5개 값은 반드시 vo 에 저장되어있어야 함.
+    // 						ㄴ 값이 null 이면 예외 발생
+    //						ㄴ 사용자가 입력한 내용을 유효 여부 검증 -> 자바스크립트(클라이언트:브라우저)에서 먼저 실행 후 서버에 넘겨준다.
 	public int insert(UserAccountVO vo) {
 		int result=0;
 		String sql = "INSERT INTO tbl_user_account(userid, username, password, birth, gender, email)" +
@@ -56,6 +60,41 @@ public class UserAccountDao {
 		}
 		
 		return result;
+	}
+	
+	// select 조회 결과가 최대 1개 행이므로 vo 타입으로 리턴 - 0 또는 1개 행이 결과값
+	public UserAccountVO selectForLogin(String userid, String password) {
+		UserAccountVO vo=null;
+		String sql = "SELECT * FROM tbl_user_account WHERE userid= ? and password= ?";
+		try(Connection connection = getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+		) {
+			 pstmt.setString(1, userid);
+			 pstmt.setString(2, password);
+             ResultSet rs = pstmt.executeQuery();
+             if(rs.next()){
+            	 // 모든 컬럼 매핑
+//            	 vo = new UserAccountVO( rs.getString(1),
+//				            			 rs.getString(2),
+//				            			 rs.getString(3),
+//				            			 rs.getString(4),
+//				            			 rs.getString(5),
+//				            			 rs.getString(6));
+            	 // 일부 컬럼만 매핑
+            	 vo = new UserAccountVO(
+            			 			rs.getString(1),
+            			 			rs.getString(2),
+            			 			null,  // 매핑할 필요가 없는 컬럼은 null 처리.
+            			 			null,
+            			 			null,
+            			 			rs.getString(6));
+                                    
+             }
+			
+		} catch (Exception e) {
+			System.out.println("예외 : " + e.getMessage());
+		}
+		return vo;  // 조회 결과(행)가 없으면 vo는  null 
 	}
 
 }

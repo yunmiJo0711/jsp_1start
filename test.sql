@@ -10,3 +10,8 @@ create table tbl_user_account (
 	gender varchar2(50) not null,
 	email varchar2(50) unique
 );
+
+-- dao의 selectForLogin() 메소드 추가 -> 인자? 리턴타입?
+-- 			ㄴ 매개변수 2개 , 결과 행은 0~1개 행
+select * from TBL_USER_ACCOUNT
+where userid='김땡땡' and password='1234';

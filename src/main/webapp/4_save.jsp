@@ -27,7 +27,7 @@
 	// UserAccountDao 클래스의 유일한 인스턴스를 dao라는 변수에 할당하는 코드입니다. 
 	// 이를 통해 해당 인스턴스를 여러 곳에서 재사용할 수 있게 됩니다.
 	UserAccountDao dao = UserAccountDao.getInstance();
-	// UserAccountVO 생성자 사용하여 '객체' 만들기 
+	// UserAccountVO 생성자 사용하여'객체' 만들기 (insert에 필요한 데이터)
 	UserAccountVO vo = new UserAccountVO(username, userid, password, birth, gender, email);
 	int result = dao.insert(vo);
 	// dao 클래스 사용하기, 인자는 vo로 받는다
