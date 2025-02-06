@@ -19,6 +19,22 @@
 		UserAccountVO vo = dao.selectForLogin(userid, password);
 		if(vo != null){
 			out.print("<h2>@로그인 성공 했습니다.!!@</h2>");
+			
+			session.setAttribute("user", vo);  
+			// 세션에 필요한 데이터 저장.  --> 로그인 사용자에 대한 정보
+			// 브라우저에 저장하는건 쿠키, 세션에 필요한 데이터를 서버에 저장하는건 jsp
+			// " " <- 이 안에 들어가는 key 값은 임의로 준다. 
+	%>
+		<h2>로그인 사용자</h2>
+		<ul>
+			<li> 아이디 : <%= vo.getUserid() %></li>
+			<li> 이름 : <%= vo.getUsername() %></li>
+			<li> 이메일 : <%= vo.getEmail() %></li>
+		</ul>
+		<a href="index.jsp">Go Home</a>
+		
+		
+	<%
 		}else{
 // 			out.print("<h2>로그인 실패 했습니다.</h2>");
 // 			out.print("로그인 정보를 확인해 주세요.");
@@ -27,6 +43,12 @@
 			
 		}
 		
-		%>
+	%>
+		
+		
+		
+		
+		
+		
 </body>
 </html>
